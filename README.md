@@ -90,4 +90,41 @@ Construção das duas árvores:
 
 ## Etapa 5: 
 
+
+## Etapa 6:
+Etapa 6 – Geração do Arquivo matches_summary.csv
+
+Nesta etapa foi implementada a rotina responsável por gerar o arquivo matches_summary.csv a partir de todos os objetos Match carregados previamente na leitura do dataset results.csv.
+
+O objetivo é produzir um resumo padronizado das partidas contendo apenas os campos essenciais especificados no enunciado:
+
+year – ano da partida
+
+country – país onde ocorreu o jogo
+
+home_team – seleção mandante
+
+away_team – seleção visitante
+
+score – placar no formato "home_score-away_score"
+
+A função save_summary() percorre a lista de partidas e grava cada linha no arquivo de saída, garantindo também que o diretório output/ exista antes da escrita.
+
+Decisões de Implementação:
+
+O método Match.to_row() foi criado para padronizar o formato de saída de cada partida.
+
+O caminho de saída definido é output/matches_summary.csv, conforme exigido no trabalho.
+
+Foram mantidas apenas operações de escrita sequencial, sem reordenação ou filtragem adicional, garantindo fidelidade ao dataset original.
+
+Complexidade:
+
+Tempo: O(n) – cada objeto Match é processado uma única vez.
+
+Espaço adicional: O(1) – apenas variáveis auxiliares são utilizadas; nenhum novo conjunto de dados é criado.
+
+
+<img width="345" height="25" alt="image" src="https://github.com/user-attachments/assets/af18da9c-0a50-401d-a598-e09142518ae5" />
+
 ## Etapa 6: 
