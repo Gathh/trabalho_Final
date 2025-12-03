@@ -17,7 +17,7 @@ Métodos: total_goals() → retorna a soma dos gols da partida, to_list() → re
 
 -- Integrante responsável: João Paulo Araujo Cappeletti
 
-## Etapa 2:
+## Etapa 2: Leitura do CSV e População das Estruturas
 Nesta etapa, implementamos a leitura do arquivo results.csv e a criação dos objetos Match e Team a partir de cada linha válida do dataset. O objetivo principal foi transformar os dados brutos em estruturas de dados organizadas, prontas para serem utilizadas nas etapas posteriores (BST, AVL, Ordenação etc.).
 Tratamento do CSV: Utilizamos o módulo csv para abrir e iterar sobre o arquivo localizado em data/results.csv.
 Cada linha é lida como um dicionário e passa por uma função de validação (linha_valida) que verifica:
@@ -75,13 +75,34 @@ Construção das duas árvores:
 Resultado da execução do programa:
 <img width="1544" height="124" alt="image" src="https://github.com/user-attachments/assets/8f4d2c24-68ec-49d3-88c2-47a43153651b" />
 
-## Etapa 4: 
+-- Integrante responsável: Rafagath Grazziotin Miceli Klug
+
+## Etapa 4: Ordenação das Seleções por Pontos
+Na Etapa 4, reconstruímos os resultados das partidas e calculamos os pontos de cada seleção com base no placar final (3 pontos por vitória, 1 ponto por empate). Em seguida, aplicamos dois algoritmos de ordenação distintos com o objetivo de comparar desempenho e comportamento:
+
+Merge Sort (O(n log n)) — algoritmo estável, eficiente e utilizado para a ordenação principal.
+
+Insertion Sort (O(n²)) — algoritmo simples e menos eficiente, usado para fins comparativos.
+
+Ambos ordenam as seleções de acordo com a quantidade total de pontos. Após a ordenação, o sistema gera como saída:
+
+Top 10 seleções mais pontuadas
+
+Bottom 10 seleções menos pontuadas
+
+Resultados para Merge Sort e Insertion Sort, permitindo avaliar diferenças entre os métodos.
+
+Essa etapa mostra a aplicação prática de algoritmos de ordenação, bem como a análise da performance entre estratégias de complexidades diferentes.
+
+Saído do algoritmo:
+<img width="1520" height="225" alt="image" src="https://github.com/user-attachments/assets/f96cabf1-a226-434a-aaf1-521dee2ab957" />
+
+-- Integrante responsável: Guilherme da Silva Anselmo
 
 ## Etapa 5: 
 
 
-## Etapa 6:
-Etapa 6 – Geração do Arquivo matches_summary.csv
+## Etapa 6: Geração do Arquivo matches_summary.csv
 
 Nesta etapa foi implementada a rotina responsável por gerar o arquivo matches_summary.csv a partir de todos os objetos Match carregados previamente na leitura do dataset results.csv.
 
