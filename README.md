@@ -119,18 +119,18 @@ year,country,home_team,away_team,score<br>
 Etapa 7 – Análise de Complexidades
 
 ## Resumo Geral
-Estrutura / Algoritmo	Complexidade
-Criação de Match e Team	O(1)
-Leitura do CSV	O(n)
-Lista com Matches	O(n)
-Inserção BST	O(h) (pior caso O(n))
-Inorder BST	O(n)
-Merge Sort	O(n log n)
-Insertion Sort	O(n²)
-Busca linear	O(n)
-Busca binária	O(log n)
-Inserção AVL	O(log n)
-Rotações AVL	O(1)
+Estrutura           /     Algoritmo	Complexidade<br>
+Criação de Match e Team	  O(1)<br>
+Leitura do CSV          	O(n)<br>
+Lista com Matches        	O(n)<br>
+Inserção BST            	O(h) (pior caso O(n))<br>
+Inorder BST	              O(n)<br>
+Merge Sort	              O(n log n)<br>
+Insertion Sort	          O(n²)<br>
+Busca linear	            O(n)<br>
+Busca binária	            O(log n)<br>
+Inserção AVL             	O(log n)<br>
+Rotações AVL            	O(1)<br>
 
 ## Comparação BST vs AVL
 ### BST (não balanceada)
