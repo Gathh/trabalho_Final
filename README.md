@@ -19,8 +19,19 @@ Métodos: total_goals() → retorna a soma dos gols da partida, to_list() → re
 
 ## Etapa 3: Implementação das Árvores BST
 Objetivo: Agrupar seleções por: nome (ordem alfabética) e gols totais (ordem crescente), criando duas árvores BST distintas.
-BST ordenada pelo nome da seleção (BSTTeamName) e BST ordenada pelo total de gols marcados (BSTTeamGoals)
-Cada nó armazena: team_name: nome da seleção, goals: quantidade total de gols marcados, left: filho à esquerda, right: filho à direita
+1. BST ordenada por nome (BSTTeamName)
+Nó contém: team_name e goals.
+Critério de inserção: ordem alfabética.
+Funções implementadas:
+- insert(team_name, goals)
+- inorder() → retorna seleções em ordem alfabética.
+
+2. BST ordenada por gols (BSTTeamGoals)
+Mesmo nó da anterior.
+Critério de inserção: menor número de gols à esquerda, maior à direita.
+Funções implementadas:
+- insert(team_name, goals)
+- inorder() → retorna seleções ordenadas por gols.
 
 Complexidade (Big-O): Inserção na BST
 BST não balanceada
