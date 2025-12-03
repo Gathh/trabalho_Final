@@ -103,7 +103,6 @@ Saído do algoritmo:
 
 
 ## Etapa 6: Geração do Arquivo matches_summary.csv
-
 Nesta etapa foi implementada a rotina responsável por gerar o arquivo matches_summary.csv a partir de todos os objetos Match carregados previamente na leitura do dataset results.csv.
 
 O objetivo é produzir um resumo padronizado das partidas contendo apenas os campos essenciais especificados no enunciado:
@@ -136,3 +135,14 @@ Espaço adicional: O(1) – apenas variáveis auxiliares são utilizadas; nenhum
 
 
 <img width="345" height="25" alt="image" src="https://github.com/user-attachments/assets/af18da9c-0a50-401d-a598-e09142518ae5" />
+
+-- Integrante responsável: Nicolas André Krause de Mello
+
+## Está tendo problemas ao testar?
+Siga o passo a passo para executar os algoritmos:
+1. Baixe ou clone o repositório;
+2. Certifique-se de ter as baixados extensões, dependências e executores de python;
+3. Escolha o algoritmo que deseja executar, se movendo para a pasta onde estão;
+4. Para as etapas 1-3 e 6 execute o arquivo 'main.py', através do comando 'python main.py'
+5. Para a etapa 4 use o comando 'python main_etapa4.py';
+6. Para a etapa 5;
