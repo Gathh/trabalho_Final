@@ -25,13 +25,11 @@ Complexidade (Big-O): Inserção na BST
 BST não balanceada
 - O(log N) no melhor caso
 - O(N) no pior caso
-  Construção das duas árvores
-
-agrupar gols por time → O(N)
-
-inserir cada time → O(N²) no pior caso
-
-total esperado na prática → próximo de O(N log N)
+  
+Construção das duas árvores:
+- agrupar gols por time → O(N)
+- inserir cada time → O(N²) no pior caso
+- total esperado na prática → próximo de O(N log N)
 
 ## Etapa 4: 
 
