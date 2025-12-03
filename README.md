@@ -1,5 +1,12 @@
 # Trabalho Final – Estrutura de Dados
 Projeto desenvolvido para a unidade curricular Estrutura de Dados, utilizando o dataset Global Football – *results.csv*.
+Curso: Bacharelado em Ciência de Dados e Inteligência Artificial
+Unidade Curricular: Estrutura de Dados
+Docente: Paulo Felipe Salviano Brandt
+Data: 03/02/2025
+
+## Integrantes do Grupo
+João Paulo, Rafagath Klug, Nicolas André, Matheus Cruz, Samuel Silva e Guilherme Anselmo
 
 ## Estrutura do Projeto
 project/ <br>
@@ -109,8 +116,36 @@ output/matches_summary.csv<br>
 Formato:<br>
 year,country,home_team,away_team,score<br>
 
-Etapa 7 – Relatório Final<br>
-Incluído no arquivo report.md na raiz do projeto.<br>
+Etapa 7 – Análise de Complexidades
+
+## Resumo Geral
+Estrutura / Algoritmo	Complexidade
+Criação de Match e Team	O(1)
+Leitura do CSV	O(n)
+Lista com Matches	O(n)
+Inserção BST	O(h) (pior caso O(n))
+Inorder BST	O(n)
+Merge Sort	O(n log n)
+Insertion Sort	O(n²)
+Busca linear	O(n)
+Busca binária	O(log n)
+Inserção AVL	O(log n)
+Rotações AVL	O(1)
+
+## Comparação BST vs AVL
+### BST (não balanceada)
+Pode degenerar para uma lista
+Altura pode chegar a n
+Operações podem cair para O(n)
+
+### AVL (balanceada)
+Mantém altura O(log n)
+Operações rápidas e estáveis
+Melhor desempenho no pior caso
+Ideal para dados ordenados ou quase ordenados
+
+### Conclusão
+A AVL é mais eficiente e mais estável que a BST em qualquer cenário não aleatório.
 
 ## Integração das Estruturas
 O programa combina todas as etapas em main.py, funcionando como pipeline:<br>
@@ -120,6 +155,9 @@ Processar gols e pontos<br>
 Ordenar<br>
 Inserir nas árvores<br>
 Gerar arquivo final<br>
+
+## Retorno Após Execução do Algoritmo
+<img width="1384" height="272" alt="image" src="https://github.com/user-attachments/assets/c3300d4c-78e7-4517-9da0-60314209aacb" />
 
 ## Integrantes e Contribuições
 João Paulo – Modelagem das classes (Etapa 1)<br>
