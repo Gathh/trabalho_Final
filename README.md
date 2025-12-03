@@ -99,8 +99,35 @@ Saído do algoritmo:
 
 -- Integrante responsável: Guilherme da Silva Anselmo
 
-## Etapa 5: 
+## Etapa 5: Árvore AVL por Pontos
+Nesta etapa foi construída uma árvore AVL contendo todas as seleções e seus respectivos pontos acumulados, calculados com base nas partidas carregadas do dataset.
 
+A AVL recebeu pares no formato:
+
+(pontos, seleção)
+
+A lista já havia sido ordenada anteriormente na Etapa 4 utilizando merge_sort, permitindo que a inserção na árvore fosse realizada diretamente a partir do ranking de seleções.
+
+### A implementação da AVL contém:
+. Inserção com balanceamento automático
+. Rotações simples e duplas (left, right, left-right, right-left)
+. Atualização da altura de cada nó
+. Cálculo da altura total da árvore
+
+Essa estrutura garante que a árvore permaneça balanceada independentemente da ordem de inserção.
+
+
+### Complexidade
+. Inserção: O(log n) por elemento
+. Criação da árvore completa: O(n log n)
+. Altura da árvore: O(log n)
+
+Após a inserção de todas as seleções, a altura final da AVL é exibida no terminal.
+
+Saída do algoritmo:
+<img width="1266" height="91" alt="image" src="https://github.com/user-attachments/assets/e4639693-83e5-41ba-89a3-330f1caae235" />
+
+-- Integrande responsável: Samuel Silva de Rezende
 
 ## Etapa 6: Geração do Arquivo matches_summary.csv
 Nesta etapa foi implementada a rotina responsável por gerar o arquivo matches_summary.csv a partir de todos os objetos Match carregados previamente na leitura do dataset results.csv.
