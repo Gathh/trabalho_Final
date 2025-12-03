@@ -1,4 +1,5 @@
 import csv
+import os
 from datetime import datetime
 from collections import defaultdict
 
@@ -27,46 +28,34 @@ class Match:
 
 
 def read_matches(path):
-    # dict com chave: (date, home_team, away_team)
-    grouped = defaultdict(lambda: {"home_g": 0, "away_g": 0, "country": ""})
+    matches = []
 
     with open(path, encoding="utf-8") as f:
         reader = csv.DictReader(f)
 
         for row in reader:
-            date = row["date"]
+            # filtro simples de linhas inválidas (pode explicar no relatório)
+            if not row["date"] or not row["home_team"] or not row["away_team"]:
+                continue
+
+            date = datetime.strptime(row["date"], "%Y-%m-%d")
             home = row["home_team"]
             away = row["away_team"]
-            scoring_team = row["team"]  # time que fez o gol
+            home_g = int(row["home_score"])
+            away_g = int(row["away_score"])
+            country = row["country"]
 
-            key = (date, home, away)
-
-            # país = "home_team" normalmente, mas não tem no arquivo
-            grouped[key]["country"] = home
-
-            if scoring_team == home:
-                grouped[key]["home_g"] += 1
-            elif scoring_team == away:
-                grouped[key]["away_g"] += 1
-
-    matches = []
-    for (date, home, away), info in grouped.items():
-        matches.append(
-            Match(
-                datetime.strptime(date, "%Y-%m-%d"),
-                home,
-                away,
-                info["home_g"],
-                info["away_g"],
-                info["country"]
+            matches.append(
+                Match(date, home, away, home_g, away_g, country)
             )
-        )
 
     return matches
 
 
-def save_summary(matches):
-    with open("matches_summary.csv", "w", newline="", encoding="utf-8") as f:
+def save_summary(matches, output_path="output/matches_summary.csv"):
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+    with open(output_path, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["year", "country", "home_team", "away_team", "score"])
         for m in matches:
@@ -95,11 +84,12 @@ def calc_points(matches):
 
 
 def main():
-    matches = read_matches("goalscorers.csv")
-    print("Total de partidas reconstruídas:", len(matches))
+    matches = read_matches("../data/results.csv")
+    print("Total de partidas lidas:", len(matches))
 
+    # ETAPA 6 - Geração do CSV de resumo
     save_summary(matches)
-    print("Arquivo matches_summary.csv gerado!")
+    print("Arquivo output/matches_summary.csv gerado!")
 
     # BST por nome
     goals = calc_goals(matches)
@@ -128,4 +118,5 @@ def main():
     print("\nAltura da AVL:", avl.height())
 
 
-main()
+if __name__ == "__main__":
+    main()
