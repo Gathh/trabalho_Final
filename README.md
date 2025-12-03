@@ -108,5 +108,3 @@ Espaço adicional: O(1) – apenas variáveis auxiliares são utilizadas; nenhum
 
 
 <img width="345" height="25" alt="image" src="https://github.com/user-attachments/assets/af18da9c-0a50-401d-a598-e09142518ae5" />
-
-## Etapa 6: 
