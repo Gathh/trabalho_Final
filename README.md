@@ -2,19 +2,19 @@
 Projeto desenvolvido para a unidade curricular Estrutura de Dados, utilizando o dataset Global Football – *results.csv*.
 
 ## Estrutura do Projeto
-project/
-├─ data/
-│  └─ results.csv
-├─ output/
-│  └─ matches_summary.csv        ← gerado automaticamente
-├─ src/
-│  ├─ data_structs.py            ← Etapa 1: Team e Match
-│  ├─ bst.py                     ← Etapa 3: Árvores BST
-│  ├─ avl.py                     ← Etapa 5: Árvore AVL
-│  ├─ sorting.py                 ← Etapa 4: Merge Sort e Insertion Sort
-│  ├─ search.py                  ← Busca Linear e Binária
-│  └─ main.py                    ← Executa etapas 2–6
-└─ report.md                     ← Relatório do trabalho
+project/ <br>
+├─ data/<br>
+│  └─ results.csv<br>
+├─ output/<br>
+│  └─ matches_summary.csv        ← gerado automaticamente<br>
+├─ src/<br>
+│  ├─ data_structs.py            ← Etapa 1: Team e Match<br>
+│  ├─ bst.py                     ← Etapa 3: Árvores BST<br>
+│  ├─ avl.py                     ← Etapa 5: Árvore AVL<br>
+│  ├─ sorting.py                 ← Etapa 4: Merge Sort e Insertion Sort<br>
+│  ├─ search.py                  ← Busca Linear e Binária<br>
+│  └─ main.py                    ← Executa etapas 2–6<br>
+└─ report.md                     ← Relatório do trabalho<br>
 
 ## Objetivo do Projeto
 Processar o dataset de resultados de partidas internacionais de futebol, aplicando:
