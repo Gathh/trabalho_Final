@@ -1,8 +1,8 @@
 # Trabalho Final – Estrutura de Dados
-Projeto desenvolvido para a unidade curricular Estrutura de Dados, utilizando o dataset Global Football – *results.csv*.
-Curso: Bacharelado em Ciência de Dados e Inteligência Artificial
-Unidade Curricular: Estrutura de Dados
-Docente: Paulo Felipe Salviano Brandt
+Projeto desenvolvido para a unidade curricular Estrutura de Dados, utilizando o dataset Global Football – *results.csv*.<br>
+Curso: Bacharelado em Ciência de Dados e Inteligência Artificial<br>
+Unidade Curricular: Estrutura de Dados<br>
+Docente: Paulo Felipe Salviano Brandt<br>
 Data: 03/02/2025
 
 ## Integrantes do Grupo
