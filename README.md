@@ -15,6 +15,8 @@ Classe Match
 Atributos: date (datetime), home_team (Team), away_team (Team), tournament (string), city (string), country (string), neutral (bool)
 Métodos: total_goals() → retorna a soma dos gols da partida, to_list() → retorna uma lista no formato: 
 
+-- Integrante responsável: João Paulo Araujo Cappeletti
+
 ## Etapa 2:
 Nesta etapa, implementamos a leitura do arquivo results.csv e a criação dos objetos Match e Team a partir de cada linha válida do dataset. O objetivo principal foi transformar os dados brutos em estruturas de dados organizadas, prontas para serem utilizadas nas etapas posteriores (BST, AVL, Ordenação etc.).
 Tratamento do CSV: Utilizamos o módulo csv para abrir e iterar sobre o arquivo localizado em data/results.csv.
@@ -42,6 +44,8 @@ Validação: O(1) por linha, já que os campos são sempre os mesmos.
 Criação dos objetos e inserção na lista: O(1) por partida.
 Complexidade total da etapa: O(n).
 
+-- Integrante responsável: Matheus Silva da Cruz
+
 ## Etapa 3: Implementação das Árvores BST
 Objetivo: Agrupar seleções por: nome (ordem alfabética) e gols totais (ordem crescente), criando duas árvores BST distintas.
 1. BST ordenada por nome (BSTTeamName)
@@ -67,6 +71,9 @@ Construção das duas árvores:
 - agrupar gols por time → O(N)
 - inserir cada time → O(N²) no pior caso
 - total esperado na prática → próximo de O(N log N)
+
+Resultado da execução do programa:
+<img width="1544" height="124" alt="image" src="https://github.com/user-attachments/assets/8f4d2c24-68ec-49d3-88c2-47a43153651b" />
 
 ## Etapa 4: 
 
