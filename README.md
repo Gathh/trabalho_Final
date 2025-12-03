@@ -17,6 +17,7 @@ Métodos: total_goals() → retorna a soma dos gols da partida, to_list() → re
 
 ## Etapa 2:
 
+<img width="449" height="414" alt="image" src="https://github.com/user-attachments/assets/af0d1342-661e-44ff-b131-db8e20df7de7" />
 
 ## Etapa 3: Implementação das Árvores BST
 Objetivo: Agrupar seleções por: nome (ordem alfabética) e gols totais (ordem crescente), criando duas árvores BST distintas.
