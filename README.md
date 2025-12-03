@@ -17,49 +17,31 @@ Métodos: total_goals() → retorna a soma dos gols da partida, to_list() → re
 
 ## Etapa 2:
 Nesta etapa, implementamos a leitura do arquivo results.csv e a criação dos objetos Match e Team a partir de cada linha válida do dataset. O objetivo principal foi transformar os dados brutos em estruturas de dados organizadas, prontas para serem utilizadas nas etapas posteriores (BST, AVL, Ordenação etc.).
-
-# Tratamento do CSV
-Utilizamos o módulo csv para abrir e iterar sobre o arquivo localizado em data/results.csv.
+Tratamento do CSV: Utilizamos o módulo csv para abrir e iterar sobre o arquivo localizado em data/results.csv.
 Cada linha é lida como um dicionário e passa por uma função de validação (linha_valida) que verifica:
-Presença de todos os campos obrigatórios
-Ausência de valores vazios
-Conversão correta dos placares para inteiros
-Conversão da data para datetime
+- Presença de todos os campos obrigatórios
+- Ausência de valores vazios
+- Conversão correta dos placares para inteiros
+- Conversão da data para datetime
 
 Linhas que não atendiam a esses requisitos foram descartadas para evitar erros durante o processamento.
 
-#-+ Estrutura de Dados Utilizada
-
-A estrutura escolhida para armazenar os jogos foi uma lista Python.
-Cada item da lista é um objeto Match, construído a partir:
-
-da data convertida,
-
-dos times (Team),
-
-do placar,
-
-e das demais informações da partida.
+Estrutura de Dados Utilizada: A estrutura escolhida para armazenar os jogos foi uma lista Python.
+Cada item da lista é um objeto Match, construído a partir: da data convertida, dos times (Team), do placar, e das demais informações da partida.
 
 A escolha da lista foi feita por oferecer inserção eficiente e permitir percursos simples nas etapas seguintes.
-
-✔ Saída da Etapa
 
 Ao final da execução, o programa imprime:
 
 <img width="696" height="29" alt="image" src="https://github.com/user-attachments/assets/24cf7101-085f-497b-8522-36340a939d4a" />
 
 Esse número representa o total de partidas corretamente processadas e armazenadas na estrutura escolhida.
-
-# Complexidade (Big O)
-
+Complexidade (Big O):
 Leitura do CSV: O(n), onde n é o número de linhas do arquivo.
-
 Validação: O(1) por linha, já que os campos são sempre os mesmos.
-
 Criação dos objetos e inserção na lista: O(1) por partida.
-
 Complexidade total da etapa: O(n).
+
 ## Etapa 3: Implementação das Árvores BST
 Objetivo: Agrupar seleções por: nome (ordem alfabética) e gols totais (ordem crescente), criando duas árvores BST distintas.
 1. BST ordenada por nome (BSTTeamName)
