@@ -1,11 +1,10 @@
 from dataclasses import dataclass
 from datetime import datetime
 
-
 @dataclass
 class Team:
     name: str
-    score: int
+    score: int   # gols marcados na partida
 
 
 @dataclass
@@ -22,13 +21,13 @@ class Match:
         return self.home_team.score + self.away_team.score
 
     def to_list(self) -> list:
-        year = self.date.year
-        score_str = f"{self.home_team.score} x {self.away_team.score}"
-
+        """
+        Retorna linha formatada para o CSV final matches_summary.csv.
+        """
         return [
-            year,
+            self.date.year,
             self.country,
             self.home_team.name,
             self.away_team.name,
-            score_str
+            f"{self.home_team.score}-{self.away_team.score}"
         ]

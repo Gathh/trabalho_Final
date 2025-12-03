@@ -3,30 +3,15 @@ import os
 from datetime import datetime
 from collections import defaultdict
 
+from data_structs import Team, Match
 from bst import BST
 from avl import AVL
-from sorting import merge_sort
+from sorting import merge_sort, insertion_sort
 
 
-class Match:
-    def __init__(self, date, home, away, home_g, away_g, country):
-        self.date = date
-        self.home = home
-        self.away = away
-        self.home_g = int(home_g)
-        self.away_g = int(away_g)
-        self.country = country
-
-    def to_row(self):
-        return [
-            self.date.year,
-            self.country,
-            self.home,
-            self.away,
-            f"{self.home_g}-{self.away_g}"
-        ]
-
-
+# -----------------------------------------------------
+# ETAPA 2 — LEITURA DO CSV EM ESTRUTURAS DE DADOS
+# -----------------------------------------------------
 def read_matches(path):
     matches = []
 
@@ -34,85 +19,118 @@ def read_matches(path):
         reader = csv.DictReader(f)
 
         for row in reader:
-            # filtro simples de linhas inválidas (pode explicar no relatório)
+            # filtragem simples
             if not row["date"] or not row["home_team"] or not row["away_team"]:
                 continue
 
             date = datetime.strptime(row["date"], "%Y-%m-%d")
-            home = row["home_team"]
-            away = row["away_team"]
-            home_g = int(row["home_score"])
-            away_g = int(row["away_score"])
-            country = row["country"]
+            home = Team(row["home_team"], int(row["home_score"]))
+            away = Team(row["away_team"], int(row["away_score"]))
 
-            matches.append(
-                Match(date, home, away, home_g, away_g, country)
+            m = Match(
+                date=date,
+                home_team=home,
+                away_team=away,
+                tournament=row["tournament"],
+                city=row["city"],
+                country=row["country"],
+                neutral=row["neutral"].upper() == "TRUE"
             )
+
+            matches.append(m)
 
     return matches
 
 
-def save_summary(matches, output_path="output/matches_summary.csv"):
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-
-    with open(output_path, "w", newline="", encoding="utf-8") as f:
-        w = csv.writer(f)
-        w.writerow(["year", "country", "home_team", "away_team", "score"])
-        for m in matches:
-            w.writerow(m.to_row())
-
-
-def calc_goals(matches):
+# -----------------------------------------------------
+# CALCULA GOLS POR SELEÇÃO
+# -----------------------------------------------------
+def get_goals(matches):
     goals = defaultdict(int)
     for m in matches:
-        goals[m.home] += m.home_g
-        goals[m.away] += m.away_g
-    return list(goals.items())
+        goals[m.home_team.name] += m.home_team.score
+        goals[m.away_team.name] += m.away_team.score
+    return list(goals.items())  # [(time, gols)]
 
 
-def calc_points(matches):
+# -----------------------------------------------------
+# CALCULA PONTOS POR SELEÇÃO
+# -----------------------------------------------------
+def get_points(matches):
     pts = defaultdict(int)
     for m in matches:
-        if m.home_g > m.away_g:
-            pts[m.home] += 3
-        elif m.away_g > m.home_g:
-            pts[m.away] += 3
+        if m.home_team.score > m.away_team.score:
+            pts[m.home_team.name] += 3
+        elif m.home_team.score < m.away_team.score:
+            pts[m.away_team.name] += 3
         else:
-            pts[m.home] += 1
-            pts[m.away] += 1
+            pts[m.home_team.name] += 1
+            pts[m.away_team.name] += 1
     return list(pts.items())
 
 
+# -----------------------------------------------------
+# ETAPA 6 — GERA CSV matches_summary.csv
+# -----------------------------------------------------
+def save_summary(matches):
+    os.makedirs("../output", exist_ok=True)
+    out = "../output/matches_summary.csv"
+
+    with open(out, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["year", "country", "home_team", "away_team", "score"])
+        for m in matches:
+            w.writerow(m.to_list())
+
+    print("Arquivo gerado:", out)
+
+
+# -----------------------------------------------------
+# MAIN — EXECUTA TODAS AS ETAPAS
+# -----------------------------------------------------
 def main():
     matches = read_matches("../data/results.csv")
     print("Total de partidas lidas:", len(matches))
 
-    # ETAPA 6 - Geração do CSV de resumo
+    # Etapa 6
     save_summary(matches)
-    print("Arquivo output/matches_summary.csv gerado!")
 
-    # BST por nome
-    goals = calc_goals(matches)
+    # Etapa 3 — BSTs
+    goals = get_goals(matches)
+
     bst_name = BST()
-    for team, total in goals:
-        bst_name.insert(team, total)
-    print("\nBST por nome:", bst_name.inorder()[:10])
+    for team, g in goals:
+        bst_name.insert(team, g)
 
-    # BST por gols
+    print("\nBST ordenada por nome (primeiros 10):")
+    print(bst_name.inorder()[:10])
+
+    # BST ordenada por gols
     bst_goals = BST()
-    for team, total in goals:
-        bst_goals.insert(total, team)
-    print("\nBST por gols (top 10):", bst_goals.inorder()[-10:])
+    for team, g in goals:
+        bst_goals.insert(g, team)
 
-    # Ranking por pontos
-    pts = calc_points(matches)
-    ranking = merge_sort(pts, key=lambda x: x[1])
-    ranking.reverse()
-    print("\nTop 10 por pontos:", ranking[:10])
+    print("\nBST ordenada por gols (últimos 10):")
+    print(bst_goals.inorder()[-10:])
 
-    # AVL
+    # Etapa 4 — Ordenação
+    pts = get_points(matches)
+
+    ordenado_merge = merge_sort(pts, key=lambda x: x[1])
+    ordenado_merge.reverse()
+
+    print("\nTop 10 por pontos (Merge Sort):")
+    print(ordenado_merge[:10])
+
+    ordenado_insert = insertion_sort(pts, key=lambda x: x[1])
+    ordenado_insert.reverse()
+
+    print("\nTop 10 por pontos (Insertion Sort):")
+    print(ordenado_insert[:10])
+
+    # Etapa 5 — AVL por pontos
     avl = AVL()
-    for team, p in pts:
+    for team, p in ordenado_merge:
         avl.insert(p, team)
 
     print("\nAltura da AVL:", avl.height())

@@ -1,175 +1,152 @@
-# Trabalho de Estrutura de Dados
+import csv
+import os
+from datetime import datetime
+from collections import defaultdict
 
-Grupo:
-Rafagath, Nicolas, João Paulo, Samuel, Matheus e Guilherme da Silva Anselmo
-
-
-## Etapa 1: Modelagem das Estruturas Team e Match
-Objetivo: Criar estruturas de dados heterogêneas para representar cada partida de futebol, utilizando classes em Python.
-
-### Estruturas Implementadas
-Classe Team
-Atributos:name (string), score (int)
-
-Classe Match
-Atributos: date (datetime), home_team (Team), away_team (Team), tournament (string), city (string), country (string), neutral (bool)
-Métodos: total_goals() → retorna a soma dos gols da partida, to_list() → retorna uma lista no formato: 
-
--- Integrante responsável: João Paulo Araujo Cappeletti
-
-## Etapa 2: Leitura do CSV e População das Estruturas
-Nesta etapa, implementamos a leitura do arquivo results.csv e a criação dos objetos Match e Team a partir de cada linha válida do dataset. O objetivo principal foi transformar os dados brutos em estruturas de dados organizadas, prontas para serem utilizadas nas etapas posteriores (BST, AVL, Ordenação etc.).
-Tratamento do CSV: Utilizamos o módulo csv para abrir e iterar sobre o arquivo localizado em data/results.csv.
-Cada linha é lida como um dicionário e passa por uma função de validação (linha_valida) que verifica:
-- Presença de todos os campos obrigatórios
-- Ausência de valores vazios
-- Conversão correta dos placares para inteiros
-- Conversão da data para datetime
-
-Linhas que não atendiam a esses requisitos foram descartadas para evitar erros durante o processamento.
-
-Estrutura de Dados Utilizada: A estrutura escolhida para armazenar os jogos foi uma lista Python.
-Cada item da lista é um objeto Match, construído a partir: da data convertida, dos times (Team), do placar, e das demais informações da partida.
-
-A escolha da lista foi feita por oferecer inserção eficiente e permitir percursos simples nas etapas seguintes.
-
-Ao final da execução, o programa imprime:
-
-<img width="696" height="29" alt="image" src="https://github.com/user-attachments/assets/24cf7101-085f-497b-8522-36340a939d4a" />
-
-Esse número representa o total de partidas corretamente processadas e armazenadas na estrutura escolhida.
-Complexidade (Big O):
-Leitura do CSV: O(n), onde n é o número de linhas do arquivo.
-Validação: O(1) por linha, já que os campos são sempre os mesmos.
-Criação dos objetos e inserção na lista: O(1) por partida.
-Complexidade total da etapa: O(n).
-
--- Integrante responsável: Matheus Silva da Cruz
-
-## Etapa 3: Implementação das Árvores BST
-Objetivo: Agrupar seleções por: nome (ordem alfabética) e gols totais (ordem crescente), criando duas árvores BST distintas.
-1. BST ordenada por nome (BSTTeamName)
-Nó contém: team_name e goals.
-Critério de inserção: ordem alfabética.
-Funções implementadas:
-- insert(team_name, goals)
-- inorder() → retorna seleções em ordem alfabética.
-
-2. BST ordenada por gols (BSTTeamGoals)
-Mesmo nó da anterior.
-Critério de inserção: menor número de gols à esquerda, maior à direita.
-Funções implementadas:
-- insert(team_name, goals)
-- inorder() → retorna seleções ordenadas por gols.
-
-Complexidade (Big-O): Inserção na BST
-BST não balanceada
-- O(log N) no melhor caso
-- O(N) no pior caso
-  
-Construção das duas árvores:
-- agrupar gols por time → O(N)
-- inserir cada time → O(N²) no pior caso
-- total esperado na prática → próximo de O(N log N)
-
-Resultado da execução do programa:
-<img width="1544" height="124" alt="image" src="https://github.com/user-attachments/assets/8f4d2c24-68ec-49d3-88c2-47a43153651b" />
-
--- Integrante responsável: Rafagath Grazziotin Miceli Klug
-
-## Etapa 4: Ordenação das Seleções por Pontos
-Na Etapa 4, reconstruímos os resultados das partidas e calculamos os pontos de cada seleção com base no placar final (3 pontos por vitória, 1 ponto por empate). Em seguida, aplicamos dois algoritmos de ordenação distintos com o objetivo de comparar desempenho e comportamento:
-
-Merge Sort (O(n log n)) — algoritmo estável, eficiente e utilizado para a ordenação principal.
-
-Insertion Sort (O(n²)) — algoritmo simples e menos eficiente, usado para fins comparativos.
-
-Ambos ordenam as seleções de acordo com a quantidade total de pontos. Após a ordenação, o sistema gera como saída:
-
-Top 10 seleções mais pontuadas
-
-Bottom 10 seleções menos pontuadas
-
-Resultados para Merge Sort e Insertion Sort, permitindo avaliar diferenças entre os métodos.
-
-Essa etapa mostra a aplicação prática de algoritmos de ordenação, bem como a análise da performance entre estratégias de complexidades diferentes.
-
-Saído do algoritmo:
-<img width="1520" height="225" alt="image" src="https://github.com/user-attachments/assets/f96cabf1-a226-434a-aaf1-521dee2ab957" />
-
--- Integrante responsável: Guilherme da Silva Anselmo
-
-## Etapa 5: Árvore AVL por Pontos
-Nesta etapa foi construída uma árvore AVL contendo todas as seleções e seus respectivos pontos acumulados, calculados com base nas partidas carregadas do dataset.
-
-A AVL recebeu pares no formato:
-
-(pontos, seleção)
-
-A lista já havia sido ordenada anteriormente na Etapa 4 utilizando merge_sort, permitindo que a inserção na árvore fosse realizada diretamente a partir do ranking de seleções.
-
-### A implementação da AVL contém:
-. Inserção com balanceamento automático
-. Rotações simples e duplas (left, right, left-right, right-left)
-. Atualização da altura de cada nó
-. Cálculo da altura total da árvore
-
-Essa estrutura garante que a árvore permaneça balanceada independentemente da ordem de inserção.
+from data_structs import Team, Match
+from bst import BST
+from avl import AVL
+from sorting import merge_sort, insertion_sort
 
 
-### Complexidade
-. Inserção: O(log n) por elemento
-. Criação da árvore completa: O(n log n)
-. Altura da árvore: O(log n)
+# -----------------------------------------------------
+# ETAPA 2 — LEITURA DO CSV EM ESTRUTURAS DE DADOS
+# -----------------------------------------------------
+def read_matches(path):
+    matches = []
 
-Após a inserção de todas as seleções, a altura final da AVL é exibida no terminal.
+    with open(path, encoding="utf-8") as f:
+        reader = csv.DictReader(f)
 
-Saída do algoritmo:
-<img width="1266" height="91" alt="image" src="https://github.com/user-attachments/assets/e4639693-83e5-41ba-89a3-330f1caae235" />
+        for row in reader:
+            if not row["date"] or not row["home_team"] or not row["away_team"]:
+                continue
 
--- Integrande responsável: Samuel Silva de Rezende
+            date = datetime.strptime(row["date"], "%Y-%m-%d")
+            home = Team(row["home_team"], int(row["home_score"]))
+            away = Team(row["away_team"], int(row["away_score"]))
 
-## Etapa 6: Geração do Arquivo matches_summary.csv
-Nesta etapa foi implementada a rotina responsável por gerar o arquivo matches_summary.csv a partir de todos os objetos Match carregados previamente na leitura do dataset results.csv.
+            m = Match(
+                date=date,
+                home_team=home,
+                away_team=away,
+                tournament=row["tournament"],
+                city=row["city"],
+                country=row["country"],
+                neutral=row["neutral"].upper() == "TRUE"
+            )
 
-O objetivo é produzir um resumo padronizado das partidas contendo apenas os campos essenciais especificados no enunciado:
+            matches.append(m)
 
-year – ano da partida
-
-country – país onde ocorreu o jogo
-
-home_team – seleção mandante
-
-away_team – seleção visitante
-
-score – placar no formato "home_score-away_score"
-
-A função save_summary() percorre a lista de partidas e grava cada linha no arquivo de saída, garantindo também que o diretório output/ exista antes da escrita.
-
-Decisões de Implementação:
-
-O método Match.to_row() foi criado para padronizar o formato de saída de cada partida.
-
-O caminho de saída definido é output/matches_summary.csv, conforme exigido no trabalho.
-
-Foram mantidas apenas operações de escrita sequencial, sem reordenação ou filtragem adicional, garantindo fidelidade ao dataset original.
-
-Complexidade:
-
-Tempo: O(n) – cada objeto Match é processado uma única vez.
-
-Espaço adicional: O(1) – apenas variáveis auxiliares são utilizadas; nenhum novo conjunto de dados é criado.
+    return matches
 
 
-<img width="345" height="25" alt="image" src="https://github.com/user-attachments/assets/af18da9c-0a50-401d-a598-e09142518ae5" />
+# -----------------------------------------------------
+# GOLS POR SELEÇÃO
+# -----------------------------------------------------
+def get_goals(matches):
+    goals = defaultdict(int)
+    for m in matches:
+        goals[m.home_team.name] += m.home_team.score
+        goals[m.away_team.name] += m.away_team.score
+    return list(goals.items())
 
--- Integrante responsável: Nicolas André Krause de Mello
 
-## Está tendo problemas ao testar?
-Siga o passo a passo para executar os algoritmos:
-1. Baixe ou clone o repositório;
-2. Certifique-se de ter as baixados extensões, dependências e executores de python;
-3. Escolha o algoritmo que deseja executar, se movendo para a pasta onde estão;
-4. Para as etapas 1-3 e 6 execute o arquivo 'main.py', através do comando 'python main.py'
-5. Para a etapa 4 use o comando 'python main_etapa4.py';
-6. Para a etapa 5;
+# -----------------------------------------------------
+# PONTOS POR SELEÇÃO
+# -----------------------------------------------------
+def get_points(matches):
+    pts = defaultdict(int)
+    for m in matches:
+        if m.home_team.score > m.away_team.score:
+            pts[m.home_team.name] += 3
+        elif m.home_team.score < m.away_team.score:
+            pts[m.away_team.name] += 3
+        else:
+            pts[m.home_team.name] += 1
+            pts[m.away_team.name] += 1
+    return list(pts.items())
+
+
+# -----------------------------------------------------
+# ETAPA 6 — GERA O CSV DE RESUMO
+# -----------------------------------------------------
+def save_summary(matches):
+    os.makedirs("../output", exist_ok=True)
+    out = "../output/matches_summary.csv"
+
+    with open(out, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["year", "country", "home_team", "away_team", "score"])
+        for m in matches:
+            w.writerow(m.to_list())
+
+    print("Arquivo gerado:", out)
+
+
+# -----------------------------------------------------
+# MAIN — EXECUTA TODAS AS ETAPAS COM SAÍDAS ORGANIZADAS
+# -----------------------------------------------------
+def main():
+    print("\nSaída Etapa 2 — Leitura do CSV e Criação das Estruturas")
+    print("-" * 70)
+
+    matches = read_matches("../data/results.csv")
+    print("Total de partidas lidas:", len(matches))
+    save_summary(matches)
+
+    # -------------------------------------------------
+    print("\nSaída Etapa 3 — Árvores BST")
+    print("-" * 70)
+
+    goals = get_goals(matches)
+
+    bst_name = BST()
+    for team, g in goals:
+        bst_name.insert(team, g)
+
+    print("\nBST ordenada por NOME (primeiros 10):")
+    print(bst_name.inorder()[:10])
+
+    bst_goals = BST()
+    for team, g in goals:
+        bst_goals.insert(g, team)
+
+    print("\nBST ordenada por GOLS (últimos 10):")
+    print(bst_goals.inorder()[-10:])
+
+    # -------------------------------------------------
+    print("\nSaída Etapa 4 — Ordenações (Merge Sort e Insertion Sort)")
+    print("-" * 70)
+
+    pts = get_points(matches)
+
+    ordenado_merge = merge_sort(pts, key=lambda x: x[1])
+    ordenado_merge.reverse()
+
+    print("\nTop 10 por PONTOS (Merge Sort):")
+    print(ordenado_merge[:10])
+
+    ordenado_insert = insertion_sort(pts, key=lambda x: x[1])
+    ordenado_insert.reverse()
+
+    print("\nTop 10 por PONTOS (Insertion Sort):")
+    print(ordenado_insert[:10])
+
+    # -------------------------------------------------
+    print("\nSaída Etapa 5 — Árvore AVL Balanceada por Pontos")
+    print("-" * 70)
+
+    avl = AVL()
+    for team, p in ordenado_merge:
+        avl.insert(p, team)
+
+    print("Altura da AVL:", avl.height())
+
+    # -------------------------------------------------
+    print("\nProcessamento concluído!")
+    print("-" * 70 + "\n")
+
+
+if __name__ == "__main__":
+    main()
